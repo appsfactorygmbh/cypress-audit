@@ -12,7 +12,7 @@ Run [Lighthouse](https://developers.google.com/web/tools/lighthouse) and [Pa11y]
 
 # Original Repository
 
-This is a fork of [cypress-audit](
+This is a fork of https://github.com/stefanonardo/cypress-audit, which is also a fork of https://github.com/mfrachet/cypress-audit. But both were basically on the same level, when we forked.
 
 # About this fork
 
