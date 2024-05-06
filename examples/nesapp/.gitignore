@@ -27,4 +27,4 @@ coverage
 # test results
 cypress/screenshots
 cypress/videos
-
+cypress/reports

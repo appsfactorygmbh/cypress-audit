@@ -9,18 +9,19 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run -b chrome",
+    "cypress:run": "cypress run -b chrome --spec 'cypress/e2e/**/*.cy.ts'",
+    "cypress:audit": "cypress run -b chrome --spec 'cypress/audit/**/*.cy.ts'",
     "test:unit": "vitest"
   },
   "dependencies": {
-    "@appsfactorygmbh/cypress-audit": "file:../..",
+    "@appsfactory/cypress-audit": "file:../..",
     "@testing-library/vue": "^8.0.3",
     "@vueuse/core": "^10.9.0",
     "h3-zod": "^0.5.3",
     "nuxt": "^3.11.2",
     "vue": "^3.4.26",
     "vue-router": "^4.3.2",
-    "zod": "^3.23.5"
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -28,15 +29,14 @@
     "@nuxtjs/tailwindcss": "^6.12.0",
     "@testing-library/cypress": "^10.0.1",
     "@types/pa11y": "^5.3.7",
-    "@vitest/coverage-v8": "^1.5.3",
-    "@vitest/ui": "^1.5.3",
+    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
     "@vue/test-utils": "^2.4.5",
     "cypress": "^13.8.1",
     "happy-dom": "^14.7.1",
-    "live-server": "^1.2.2",
     "pa11y": "^8.0.0",
-    "tsx": "^4.7.3",
+    "tsx": "^4.9.3",
     "typescript": "^5.4.5",
-    "vitest": "^1.5.3"
+    "vitest": "^1.6.0"
   }
 }
