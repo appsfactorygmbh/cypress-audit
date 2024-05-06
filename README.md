@@ -1,5 +1,19 @@
 Run [Lighthouse](https://developers.google.com/web/tools/lighthouse) and [Pa11y](https://github.com/pa11y/pa11y) audits directly in [Cypress](https://cypress.io/) test suites
 
+# Table of Content
+
+- [About this fork](#about-this-fork)
+- [Example and Recommendation](#example-and-recommendation)
+- [Installation](#installation)
+- [Configuration](#configuration)
+  - [Basic](#basic)
+  - [Configuration](#configuration-1)
+  - [Writing Lighthouse HTML Reports to the file system](#writing-lighthouse-html-reports-to-the-file-system)
+
+# Original Repository
+
+This is a fork of [cypress-audit](
+
 # About this fork
 
 We were really happy to find @mfrachet's repository. There were just some minor things we wanted to update:
