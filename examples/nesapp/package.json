@@ -14,7 +14,6 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "@appsfactory/cypress-audit": "file:../..",
     "@testing-library/vue": "^8.0.3",
     "@vueuse/core": "^10.9.0",
     "h3-zod": "^0.5.3",
@@ -24,6 +23,7 @@
     "zod": "^3.23.6"
   },
   "devDependencies": {
+    "@appsfactory/cypress-audit": "file:../..",
     "@faker-js/faker": "^8.4.1",
     "@nuxt/test-utils": "^3.12.1",
     "@nuxtjs/tailwindcss": "^6.12.0",

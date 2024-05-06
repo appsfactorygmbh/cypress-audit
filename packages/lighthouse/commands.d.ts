@@ -1,6 +1,9 @@
 /// <reference types="cypress" />
 
-const LH = require("lighthouse/core");
+type LighthouseFlags =
+  import("../../node_modules/lighthouse/types/externs").Flags;
+type LighthouseConfig =
+  import("../../node_modules/lighthouse/types/config").default;
 
 declare namespace Cypress {
   interface LighthouseThresholds {
@@ -29,10 +32,6 @@ declare namespace Cypress {
     "dom-size"?: number;
   }
 
-  type LighthouseFlags = LH.Flags;
-
-  type LighthouseConfig = LH.Config;
-
   interface Chainable<Subject> {
     /**
      * Runs a lighthouse audit
@@ -41,7 +40,7 @@ declare namespace Cypress {
      */
     lighthouse(
       thresholds?: LighthouseThresholds,
-      opts?: LighthouseFlags,
+      flags?: LighthouseFlags,
       config?: LighthouseConfig
     ): Chainable<Subject>;
   }

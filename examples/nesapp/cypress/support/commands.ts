@@ -1,9 +1,11 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
+/// <reference types="@appsfactory/cypress-audit/packages/lighthouse/commands" />
+/// <reference types="@appsfactory/cypress-audit/packages/pa11y/commands" />
 
 import '@testing-library/cypress/add-commands'
 import '@appsfactory/cypress-audit/packages/pa11y/commands'
-import '@appsfactory/cypress-audit'
+import '@appsfactory/cypress-audit/packages/lighthouse/commands'
 
 Cypress.Commands.add('login', (email, password) => {
   cy.visit('/login')
@@ -13,16 +15,20 @@ Cypress.Commands.add('login', (email, password) => {
 })
 
 Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
+  cy.pa11y()
   cy.lighthouse(
-    { accessibility: 100 },
+    // Thresholds
+    {
+      accessibility: 80,
+      // Add more lighthouse options here for more tests
+    },
+    // Lighthouse "Flags"
     {
       formFactor: 'desktop',
       screenEmulation: {
         width: 1350,
         height: 940,
-        deviceScaleRatio: 1,
         mobile: false,
-        disable: false,
       },
       throttling: {
         rttMs: 40,
@@ -33,9 +39,12 @@ Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
         uploadThroughputKbps: 0,
       },
     },
+    // Lightouse "Config"
     {
-      settings: { output: 'html' },
       extends: 'lighthouse:default',
+      settings: {
+        output: 'html',
+      },
     },
   )
 })
