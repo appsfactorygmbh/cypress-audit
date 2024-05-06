@@ -7,7 +7,7 @@ Run [Lighthouse](https://developers.google.com/web/tools/lighthouse) and [Pa11y]
 - [Installation](#installation)
 - [Configuration](#configuration)
   - [Basic](#basic)
-  - [Configuration](#configuration-1)
+  - [Advanced](#advanced)
   - [Writing Lighthouse HTML Reports to the file system](#writing-lighthouse-html-reports-to-the-file-system)
 
 # Original Repository
@@ -31,13 +31,13 @@ We decieded to separate `e2e` and `audit` tests in two different folders. So we 
 
 Attention: This also means that you need to add the following line to your cypress.config.ts, if you want to do the same:
 
-```
+```ts
 specPattern: ['cypress/e2e/**/*.cy.ts', 'cypress/audit/**/*.audit.cy.ts'],
 ```
 
 and you could create two different npm scripts for this:
 
-```
+```json
 "cypress:run": "cypress run -b chrome --spec 'cypress/e2e/**/*.cy.ts'",
 "cypress:audit": "cypress run -b chrome --spec 'cypress/audit/**/*.cy.ts'",
 ```
@@ -52,63 +52,60 @@ and you could create two different npm scripts for this:
 
 Setup your Cypress Config to prepare the audit and pass the pa11y and/or lighthouse to the task execution:
 
-```
-import { defineConfig } from 'cypress'
-import { lighthouse, pa11y, prepareAudit } from '@appsfactory/cypress-audit'
+```ts
+import { defineConfig } from "cypress";
+import { lighthouse, pa11y, prepareAudit } from "@appsfactory/cypress-audit";
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3000',
-    specPattern: ['cypress/e2e/**/*.cy.ts', 'cypress/audit/**/*.audit.cy.ts'],
+    baseUrl: "http://localhost:3000",
+    specPattern: ["cypress/e2e/**/*.cy.ts", "cypress/audit/**/*.audit.cy.ts"],
 
     setupNodeEvents(on, config) {
-      on('before:browser:launch', (browser, launchOptions) => {
-        prepareAudit(launchOptions)
-      })
+      on("before:browser:launch", (browser, launchOptions) => {
+        prepareAudit(launchOptions);
+      });
 
-      on('task', {
+      on("task", {
         pa11y: pa11y(),
         lighthouse: lighthouse(),
-      })
+      });
     },
   },
-})
+});
 ```
 
 Add commands to your `commands.ts` and don't forget to include the type references:
 
-```
+```ts
 /// <reference types="cypress" />
 /// <reference types="@appsfactory/cypress-audit/packages/lighthouse/commands" />
 /// <reference types="@appsfactory/cypress-audit/packages/pa11y/commands" />
 
-import '@appsfactory/cypress-audit/packages/pa11y/commands'
-import '@appsfactory/cypress-audit/packages/lighthouse/commands'
-
+import "@appsfactory/cypress-audit/packages/pa11y/commands";
+import "@appsfactory/cypress-audit/packages/lighthouse/commands";
 ```
 
 Now you can use the `cy.pa11y()` and `cy.lighthouse()` commands inside your tests:
 
+```ts
+it("should pass lighthouse test", () => {
+  cy.lighthouse();
+});
+
+it("should pass pa11y test", () => {
+  cy.pa11y();
+});
 ```
 
-it('should pass lighthouse test', () => {
-    cy.lighthouse();
-})
-
-it('should pass pa11y test', () => {
-    cy.pa11y();
-})
-
-```
-
-## Configuration
+## Advanced
 
 The options for the commands are typed. So you can use intellisense for configuration.
 
 For pa11y, there is no configuration right now, but for lighthouse you can for example do create a new Command and overwrite the default configuration in the `commands.ts`
 
-```
-Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
+```ts
+Cypress.Commands.add("lighthouseWithDefaultSettings", () => {
   cy.lighthouse(
     // Thresholds
     {
@@ -117,7 +114,7 @@ Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
     },
     // Lighthouse "Flags"
     {
-      formFactor: 'desktop',
+      formFactor: "desktop",
       screenEmulation: {
         width: 1350,
         height: 940,
@@ -134,21 +131,21 @@ Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
     },
     // Lighthouse "Config"
     {
-      extends: 'lighthouse:default',
-    },
-  )
-})
+      extends: "lighthouse:default",
+    }
+  );
+});
 ```
 
 Don't forget to add the types fort his new command in your `support/index.ts`:
 
-```
+```ts
 /// <reference types="cypress" />
 
 // cypress/support/index.ts
 declare namespace Cypress {
   interface Chainable {
-    lighthouseWithDefaultSettings(): Chainable<JQuery<HTMLElement>>
+    lighthouseWithDefaultSettings(): Chainable<JQuery<HTMLElement>>;
   }
 }
 ```
@@ -157,63 +154,65 @@ declare namespace Cypress {
 
 In order to write lighthouse HTML reports to the file system, you need to change third parameter of the lighthouse command:
 
-```
+```ts
 cy.lighthouse(
-    {
-        accessibility: 80,
+  {
+    accessibility: 80,
+  },
+  undefined,
+  {
+    extends: "lighthouse:default",
+    settings: {
+      output: "html",
     },
-    undefined,
-    {
-        extends: 'lighthouse:default',
-        settings: {
-            output: 'html',
-        },
-    },
-)
+  }
+);
 ```
 
 Inside you cypress.config.js you need to store the files yourself where you need them. One example is here:
 
-```
-import { defineConfig } from 'cypress'
-import { lighthouse, pa11y, prepareAudit } from '@appsfactory/cypress-audit'
-import fs from 'fs'
-import path from 'path'
+```ts
+import { defineConfig } from "cypress";
+import { lighthouse, pa11y, prepareAudit } from "@appsfactory/cypress-audit";
+import fs from "fs";
+import path from "path";
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3000',
-    specPattern: ['cypress/e2e/**/*.cy.ts', 'cypress/audit/**/*.audit.cy.ts'],
+    baseUrl: "http://localhost:3000",
+    specPattern: ["cypress/e2e/**/*.cy.ts", "cypress/audit/**/*.audit.cy.ts"],
     // setup cypress lighthouse
     setupNodeEvents(on, config) {
-      on('before:browser:launch', (browser, launchOptions) => {
-        prepareAudit(launchOptions)
-      })
+      on("before:browser:launch", (browser, launchOptions) => {
+        prepareAudit(launchOptions);
+      });
 
-      on('task', {
+      on("task", {
         pa11y: pa11y(),
         lighthouse: lighthouse((result) => {
-          const htmlReport = result.report
+          const htmlReport = result.report;
 
-          if (typeof htmlReport !== 'string') {
-            console.error('No or too many HTML report(s) found')
-            return
+          if (typeof htmlReport !== "string") {
+            console.error("No or too many HTML report(s) found");
+            return;
           }
 
-          const reportsDir = path.join(import.meta.dirname, 'cypress/reports')
+          const reportsDir = path.join(import.meta.dirname, "cypress/reports");
 
           if (!fs.existsSync(reportsDir)) {
-            fs.mkdirSync(reportsDir)
+            fs.mkdirSync(reportsDir);
           }
 
-          const url = new URL(result.lhr.finalDisplayedUrl)
-          const sanitizedUrlPath = url.pathname.replace(/\//g, '_')
+          const url = new URL(result.lhr.finalDisplayedUrl);
+          const sanitizedUrlPath = url.pathname.replace(/\//g, "_");
 
-          fs.writeFileSync(`${reportsDir}/${sanitizedUrlPath}.html`, htmlReport)
+          fs.writeFileSync(
+            `${reportsDir}/${sanitizedUrlPath}.html`,
+            htmlReport
+          );
         }),
-      })
+      });
     },
   },
-})
-
+});
 ```
