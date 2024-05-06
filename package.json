@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "types": "index.d.ts",
-  "private": true,
-  "author": "Marvin FRACHET <marvin.frachet@gmail.com> (https://github.com/mfrachet)",
+  "author": "Oliver Weiß <oliver.weiss@appsfactory.de> (https://github.com/appsfactorygmbh)",
   "repository": {
     "type": "git",
     "url": "https://github.com/appsfactorygmbh/cypress-audit"
