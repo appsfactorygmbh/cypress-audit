@@ -5,6 +5,7 @@ Run [Lighthouse](https://developers.google.com/web/tools/lighthouse) and [Pa11y]
 - [About this fork](#about-this-fork)
 - [Example and Recommendation](#example-and-recommendation)
 - [Installation](#installation)
+- [Limitations](#limitations)
 - [Configuration](#configuration)
   - [Basic](#basic)
   - [Advanced](#advanced)
@@ -26,6 +27,10 @@ We also decided to publish only one npm package, that includes lighthouse AND pa
 # Installation
 
 `npm i -D @appsfactory/cypress-audit`
+
+# Limitations
+
+Running `cypress run` doesn't work with all browsers. We specify `-b chrome` manually.
 
 # Example and Recommendation
 
