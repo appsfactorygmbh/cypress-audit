@@ -23,6 +23,10 @@ We were really happy to find @mfrachet's repository. There were just some minor 
 
 We also decided to publish only one npm package, that includes lighthouse AND pa11y. Therefore the usage is minimally different. The example has been changed as well.
 
+# Installation
+
+`npm i -D @appsfactory/cypress-audit`
+
 # Example and Recommendation
 
 Please also look the `/examples` folder for working code.
@@ -41,10 +45,6 @@ and you could create two different npm scripts for this:
 "cypress:run": "cypress run -b chrome --spec 'cypress/e2e/**/*.cy.ts'",
 "cypress:audit": "cypress run -b chrome --spec 'cypress/audit/**/*.cy.ts'",
 ```
-
-# Installation
-
-`npm i -D @appsfactory/cypress-audit`
 
 # Configuration
 
