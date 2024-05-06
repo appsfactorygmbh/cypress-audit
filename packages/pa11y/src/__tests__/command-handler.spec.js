@@ -56,7 +56,7 @@ describe("pa11y command", () => {
   });
 
   describe("when issues", () => {
-    it("shows an error when there s one error", async () => {
+    it("shows an error when there is one error", async () => {
       global.Cypress = {
         browser: {
           displayName: "Chrome",
@@ -87,7 +87,7 @@ describe("pa11y command", () => {
           Issue: first, # of occurrences: 1.
             - Something wrong occured
             - Context: Additional context found
-            - Selector concerned: \\".somewhere-in-the-world\\"
+            - Selector concerned: \".somewhere-in-the-world\"
                     "
         `);
       }
@@ -136,13 +136,13 @@ describe("pa11y command", () => {
           Issue: first, # of occurrences: 1.
             - Something wrong occured
             - Context: Additional context found
-            - Selector concerned: \\".somewhere-in-the-world\\"
+            - Selector concerned: \".somewhere-in-the-world\"
                     
 
           Issue: second, # of occurrences: 2.
             - Something wrong occured again
             - Context: Additional context found again
-            - Selector concerned: \\".somewhere-in-the-world-again,.somewhere-in-the-world-again-2\\"
+            - Selector concerned: \".somewhere-in-the-world-again,.somewhere-in-the-world-again-2\"
                     "
         `);
       }
