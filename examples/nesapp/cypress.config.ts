@@ -16,9 +16,12 @@ export default defineConfig({
       on('task', {
         pa11y: pa11y(),
         lighthouse: lighthouse((result) => {
-          const htmlReport = Array.isArray(result.report)
-            ? result.report[0]
-            : result.report
+          const htmlReport = result.report
+
+          if (typeof htmlReport !== 'string') {
+            console.error('No or too many HTML report(s) found')
+            return
+          }
 
           const reportsDir = path.join(import.meta.dirname, 'cypress/reports')
 

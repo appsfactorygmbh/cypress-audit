@@ -15,7 +15,6 @@ Cypress.Commands.add('login', (email, password) => {
 })
 
 Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
-  cy.pa11y()
   cy.lighthouse(
     // Thresholds
     {
@@ -39,7 +38,7 @@ Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
         uploadThroughputKbps: 0,
       },
     },
-    // Lightouse "Config"
+    // Lighthouse "Config"
     {
       extends: 'lighthouse:default',
       settings: {
