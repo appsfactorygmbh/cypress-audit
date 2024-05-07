@@ -1,9 +1,9 @@
-const lighthouseLib = require("lighthouse/core/index.cjs");
-const {
+import lighthouseLib from "lighthouse/core/index.cjs";
+import {
   computeCategories,
   computeAudits,
   compareWithThresholds,
-} = require("./helpers");
+} from "./helpers";
 
 const lighthouse =
   (callback) =>
@@ -38,4 +38,4 @@ const lighthouse =
     );
   };
 
-module.exports = { lighthouse };
+export default { lighthouse };

@@ -4,4 +4,4 @@ const config = {
   roots: ["<rootDir>/packages"],
 };
 
-module.exports = config;
+export default config;

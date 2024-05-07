@@ -1,10 +1,10 @@
-const pa11yLib = require("pa11y");
-const puppeteer = require("puppeteer");
+import pa11yLib from "pa11y";
+import { connect } from "puppeteer";
 
 const pa11y =
   (callback) =>
   async ({ url, opts }) => {
-    const browser = await puppeteer.connect({
+    const browser = await connect({
       browserURL: `http://localhost:${global.cypress_audit_port}`,
     });
 
@@ -17,4 +17,4 @@ const pa11y =
     return results.issues || [];
   };
 
-module.exports = { pa11y };
+export default { pa11y };

@@ -24,6 +24,7 @@ Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
     // Lighthouse "Flags"
     {
       formFactor: 'desktop',
+
       screenEmulation: {
         width: 1350,
         height: 940,

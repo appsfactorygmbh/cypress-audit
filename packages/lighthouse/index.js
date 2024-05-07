@@ -1,3 +1,3 @@
-const { lighthouse } = require("./src/task");
+import { lighthouse } from "./src/task";
 
-module.exports = { lighthouse };
+export default { lighthouse };

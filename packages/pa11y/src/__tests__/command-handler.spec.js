@@ -1,4 +1,4 @@
-const pa11yCommandHandler = require("../command-handler");
+import pa11yCommandHandler from "../command-handler";
 
 describe("pa11y command", () => {
   beforeEach(() => {

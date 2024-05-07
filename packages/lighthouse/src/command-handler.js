@@ -78,4 +78,4 @@ const lighthouseCommandHandler = (thresholds, opts, config) => {
   });
 };
 
-module.exports = lighthouseCommandHandler;
+export default lighthouseCommandHandler;

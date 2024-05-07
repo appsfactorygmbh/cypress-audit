@@ -71,4 +71,4 @@ const compareWithThresholds = (metrics, thresholds) => {
   return { errors, results };
 };
 
-module.exports = { computeCategories, computeAudits, compareWithThresholds };
+export default { computeCategories, computeAudits, compareWithThresholds };

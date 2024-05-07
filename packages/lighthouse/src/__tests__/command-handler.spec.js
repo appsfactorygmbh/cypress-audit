@@ -1,4 +1,4 @@
-const lighthouseCommandHandler = require("../command-handler");
+import lighthouseCommandHandler from "../command-handler";
 
 describe("lighthouse command", () => {
   beforeEach(() => {

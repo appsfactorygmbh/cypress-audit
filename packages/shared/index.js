@@ -1,3 +1,3 @@
-const { prepareAudit } = require("./prepare-audit");
+import { prepareAudit } from "./prepare-audit";
 
-module.exports = { prepareAudit };
+export default { prepareAudit };

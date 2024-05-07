@@ -1,5 +1,5 @@
-const { prepareAudit } = require("./packages/shared");
-const { lighthouse } = require("./packages/lighthouse");
-const { pa11y } = require("./packages/pa11y");
+import { prepareAudit } from "./packages/shared";
+import { lighthouse } from "./packages/lighthouse";
+import { pa11y } from "./packages/pa11y";
 
-module.exports = { prepareAudit, lighthouse, pa11y };
+export default { prepareAudit, lighthouse, pa11y };

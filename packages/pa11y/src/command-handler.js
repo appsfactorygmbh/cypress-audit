@@ -87,4 +87,4 @@ const pa11yCommandHandler = (opts) => {
     });
 };
 
-module.exports = pa11yCommandHandler;
+export default pa11yCommandHandler;

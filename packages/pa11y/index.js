@@ -1,3 +1,3 @@
-const { pa11y } = require("./src/task");
+import { pa11y } from "./src/task";
 
-module.exports = { pa11y };
+export default { pa11y };

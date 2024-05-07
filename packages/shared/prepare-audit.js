@@ -15,4 +15,4 @@ const prepareAudit = (launchOptions) => {
   }
 };
 
-module.exports = { prepareAudit };
+export default { prepareAudit };

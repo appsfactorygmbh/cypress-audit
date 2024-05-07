@@ -1,8 +1,8 @@
-const {
+import {
   computeCategories,
   computeAudits,
   compareWithThresholds,
-} = require("../helpers");
+} from "../helpers";
 
 describe("performance helpers", () => {
   describe("computeCategories", () => {

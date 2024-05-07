@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "skipLibCheck": false,
+    "baseUrl": "./",
+    "allowJs": true,
+    "paths": {
+      "*": ["./node_modules/*"]
+    }
+  },
+  "include": ["packages/**/*.ts"]
+}
