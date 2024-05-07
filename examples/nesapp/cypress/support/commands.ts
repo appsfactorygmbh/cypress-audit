@@ -42,6 +42,7 @@ Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
     // Lighthouse "Config"
     {
       extends: 'lighthouse:default',
+
       settings: {
         output: 'html',
       },
