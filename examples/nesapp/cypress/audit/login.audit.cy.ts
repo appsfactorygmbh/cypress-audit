@@ -7,7 +7,7 @@ describe('Login', () => {
     cy.pa11y()
   })
 
-  it.only('should test lighthouse', () => {
+  it('should test lighthouse', () => {
     cy.lighthouseWithDefaultSettings()
   })
 })

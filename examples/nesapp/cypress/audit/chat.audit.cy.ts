@@ -8,7 +8,7 @@ describe('Chat', () => {
     cy.pa11y()
   })
 
-  it.only('should test lighthouse', () => {
+  it('should test lighthouse', () => {
     cy.lighthouseWithDefaultSettings()
   })
 })

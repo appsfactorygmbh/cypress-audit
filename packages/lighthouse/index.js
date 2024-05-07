@@ -1,3 +1,3 @@
 import { lighthouse } from "./src/task";
 
-export default { lighthouse };
+export { lighthouse };

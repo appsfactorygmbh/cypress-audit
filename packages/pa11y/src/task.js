@@ -17,4 +17,4 @@ const pa11y =
     return results.issues || [];
   };
 
-export default { pa11y };
+export { pa11y };
