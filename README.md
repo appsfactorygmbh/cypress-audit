@@ -143,7 +143,7 @@ Cypress.Commands.add("lighthouseWithDefaultSettings", () => {
 });
 ```
 
-Don't forget to add the types fort his new command in your `support/index.ts`:
+Don't forget to add the types fort his new command in your `support/index.d.ts`:
 
 ```ts
 /// <reference types="cypress" />
@@ -154,6 +154,14 @@ declare namespace Cypress {
     lighthouseWithDefaultSettings(): Chainable<JQuery<HTMLElement>>;
   }
 }
+```
+
+Now you can use it in a testfile:
+
+```ts
+it("should pass lighthouse test", () => {
+  cy.lighthouseWithDefaultSettings();
+});
 ```
 
 ## Writing Lighthouse HTML Reports to the file system
