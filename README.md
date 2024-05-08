@@ -104,11 +104,11 @@ it("should pass pa11y test", () => {
 });
 ```
 
-## Advanced
+## Advanced Lighthouse
 
 The options for the commands are typed. So you can use intellisense for configuration.
 
-For pa11y, there is no configuration right now, but for lighthouse you can for example do create a new Command and overwrite the default configuration in the `commands.ts`
+For lighthouse you can for example do create a new Command and overwrite the default configuration in the `commands.ts`
 
 ```ts
 Cypress.Commands.add("lighthouseWithDefaultSettings", () => {
@@ -148,7 +148,7 @@ Don't forget to add the types fort his new command in your `support/index.d.ts`:
 ```ts
 /// <reference types="cypress" />
 
-// cypress/support/index.ts
+// cypress/support/index.d.ts
 declare namespace Cypress {
   interface Chainable {
     lighthouseWithDefaultSettings(): Chainable<JQuery<HTMLElement>>;
@@ -164,7 +164,43 @@ it("should pass lighthouse test", () => {
 });
 ```
 
-## Writing Lighthouse HTML Reports to the file system
+## Advanced Pa11y
+
+The options for the commands are typed. So you can use intellisense for configuration.
+
+For pa11y you can for example do create a new Command and overwrite the default configuration in the `commands.ts`
+
+```ts
+Cypress.Commands.add("pa11yWithDefaultSettings", () => {
+  cy.pa11y({
+    level: "WCAG2AA",
+    // Add more pa11y options here
+  });
+});
+```
+
+Don't forget to add the types fort his new command in your `support/index.d.ts`:
+
+```ts
+/// <reference types="cypress" />
+
+// cypress/support/index.d.ts
+declare namespace Cypress {
+  interface Chainable {
+    pa11yWithDefaultSettings(): Chainable<JQuery<HTMLElement>>;
+  }
+}
+```
+
+Now you can use it in a testfile:
+
+```ts
+it("should pass pa11y test", () => {
+  cy.pa11yWithDefaultSettings();
+});
+```
+
+# Writing Lighthouse HTML Reports to the file system
 
 In order to write lighthouse HTML reports to the file system, you need to change third parameter of the lighthouse command:
 

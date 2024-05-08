@@ -14,6 +14,13 @@ Cypress.Commands.add('login', (email, password) => {
   cy.findByRole('button', { name: /login/i }).click()
 })
 
+Cypress.Commands.add('pa11yWithDefaultSettings', () => {
+  cy.pa11y({
+    level: 'WCAG2AA',
+    // Add more pa11y options here
+  })
+})
+
 Cypress.Commands.add('lighthouseWithDefaultSettings', () => {
   cy.lighthouse(
     // Thresholds

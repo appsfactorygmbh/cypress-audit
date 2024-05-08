@@ -9,5 +9,6 @@ declare namespace Cypress {
      */
     login(username: string, password: string): Chainable<JQuery<HTMLElement>>
     lighthouseWithDefaultSettings(): Chainable<JQuery<HTMLElement>>
+    pa11yWithDefaultSettings(): Chainable<JQuery<HTMLElement>>
   }
 }

@@ -4,8 +4,10 @@ describe('Chat', () => {
     cy.visit('/')
   })
 
-  it('should test pa11y', () => {
-    cy.pa11y()
+  it.only('should test pa11y', () => {
+    cy.pa11y({
+      level: 'WCAG2AA',
+    })
   })
 
   it('should test lighthouse', () => {

@@ -3,7 +3,7 @@
 declare namespace Cypress {
   type AccessibilityStandard = "Section508" | "WCAG2A" | "WCAG2AA" | "WCAG2AAA";
 
-  interface Options {
+  interface Pa11yOptions {
     actions?: string[];
     headers?: object;
     hideElements?: string;
@@ -32,6 +32,6 @@ declare namespace Cypress {
      * @example
      * cy.pa11y(opts)
      */
-    pa11y(opts?: Options): Chainable<Subject>;
+    pa11y(opts?: Pa11yOptions): Chainable<Subject>;
   }
 }
