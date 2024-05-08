@@ -2,14 +2,16 @@ Run [Lighthouse](https://developers.google.com/web/tools/lighthouse) and [Pa11y]
 
 # Table of Content
 
-- [About this fork](#about-this-fork)
-- [Example and Recommendation](#example-and-recommendation)
-- [Installation](#installation)
-- [Limitations](#limitations)
-- [Configuration](#configuration)
-  - [Basic](#basic)
-  - [Advanced](#advanced)
-  - [Writing Lighthouse HTML Reports to the file system](#writing-lighthouse-html-reports-to-the-file-system)
+1. [Original Repository](#original-repository)
+1. [About this fork](#about-this-fork)
+1. [Installation](#installation)
+1. [Limitations](#limitations)
+1. [Example and Recommendation](#example-and-recommendation)
+1. [Configuration](#configuration)
+   1. [Basic](#basic)
+   1. [Advanced Lighthouse](#advanced-lighthouse)
+   1. [Advanced Pa11y](#advanced-pa11y)
+1. [Writing Lighthouse HTML Reports to the file system](#writing-lighthouse-html-reports-to-the-file-system)
 
 # Original Repository
 
@@ -24,6 +26,11 @@ We were really happy to find @mfrachet's repository. There were just some minor 
 1. Converted from CommonJS to ESM
 
 We also decided to publish only one npm package, that includes lighthouse AND pa11y. Therefore the usage is minimally different. The example has been changed as well.
+
+# Limitations
+
+- The output of lighthouse is not informative enough. Writing the HTML reports to the file system is possible, but you need to handle the files yourself.
+- The test runners are opening the browser in a new tab, which might lose session state.
 
 # Installation
 

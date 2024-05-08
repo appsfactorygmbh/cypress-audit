@@ -5,9 +5,7 @@ describe('Chat', () => {
   })
 
   it.only('should test pa11y', () => {
-    cy.pa11y({
-      level: 'WCAG2AA',
-    })
+    cy.pa11yWithDefaultSettings()
   })
 
   it('should test lighthouse', () => {
