@@ -4,7 +4,7 @@ describe('Chat', () => {
     cy.visit('/')
   })
 
-  it.only('should test pa11y', () => {
+  it('should test pa11y', () => {
     cy.pa11yWithDefaultSettings()
   })
 
