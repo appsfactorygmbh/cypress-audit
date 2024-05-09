@@ -24,6 +24,10 @@ We were really happy to find @mfrachet's repository. There were just some minor 
 1. Fix some broken TypeScript definitions
 1. Keep pa11y and lighthouse up to date
 1. Converted from CommonJS to ESM
+1. Created one npm package for both pa11y and lighthouse
+1. Updated the example code
+1. Extend the README with more examples and explanations
+1. Show pa11y issues individually and thereby allow to highlight the HTML elements in the Cypress UI
 
 We also decided to publish only one npm package, that includes lighthouse AND pa11y. Therefore the usage is minimally different. The example has been changed as well.
 
@@ -209,6 +213,10 @@ Cypress.Commands.add(
     cy.pa11y({
       // Add more pa11y options here
       level: "WCAG2AA",
+      // Hide the nuxt dev tools elements
+      hideElements: "#nuxt-devtools-container",
+      // allow one failing test
+      threshold: 1,
       // In case you want to overwrite the default options, you can do it via the overwriteOptions parameter
       ...overwriteOptions,
     });

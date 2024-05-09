@@ -4,56 +4,23 @@ const VALID_BROWSERS = {
   Canary: true,
 };
 
-const groupIssues = (issues) => {
-  const groupedIssuesDict = issues.reduce(
-    (allIssues, { code, selector, ...rest }) => {
-      if (allIssues[code]) {
-        allIssues[code].occurrences++;
-      } else {
-        allIssues[code] = {
-          selectors: [],
-          issueId: code,
-          occurrences: 1,
-          ...rest,
-        };
-      }
-
-      if (selector) {
-        allIssues[code].selectors.push(selector);
-      }
-
-      return allIssues;
-    },
-    {}
-  );
-
-  const groupedIssues = [];
-
-  for (const group in groupedIssuesDict) {
-    if (group) {
-      groupedIssues.push(groupedIssuesDict[group]);
-    }
-  }
-
-  return groupedIssues;
+const formatIssue = (issue) => {
+  return `
+    Code: ${issue.code} |||
+    Issue: ${issue.message} |||
+    Context: ${issue.context}
+    `;
 };
 
-const formatIssues = (issues) => {
-  return issues
-    .map((issue) => {
-      const message = issue.message ? `- ${issue.message}` : ``;
-      const context = issue.context ? `- Context: ${issue.context}` : ``;
-      const selector =
-        issue.selectors.length > 0
-          ? `- Selector concerned: "${issue.selectors.join(",")}"`
-          : ``;
-      return `Issue: ${issue.issueId}, # of occurrences: ${issue.occurrences}.
-  ${message}
-  ${context}
-  ${selector}
-          `;
-    })
-    .join(`\n\n`);
+const printIssues = (issues) => {
+  issues.forEach((issue) => {
+    Cypress.log({
+      title: issue.code,
+      message: formatIssue(issue),
+      consoleProps: () => issue,
+      $el: Cypress.$(issue.selector),
+    });
+  });
 };
 
 const pa11yCommandHandler = (opts) => {
@@ -68,22 +35,23 @@ const pa11yCommandHandler = (opts) => {
     .url()
     .then((url) => cy.task("pa11y", { url, opts }))
     .then((issues) => {
-      if (issues.length > 0) {
-        const groupedIssues = groupIssues(issues);
+      printIssues(issues);
+      return cy.wrap(issues);
+    })
+    .then((issues) => {
+      const threshold = opts.threshold ?? 0;
 
-        const title =
-          issues.length === 1
-            ? `cy.pa11y - ${issues.length} accessibility violation was found`
-            : `cy.pa11y - ${issues.length} accessibility violations were found`;
+      assert.isBelow(
+        issues.length,
+        threshold,
+        `cy.pa11y - ${issues.length} accessibility violation(s) found. Threshold: ${threshold}. Issues: ${issues.length}`
+      );
 
-        const formattedIssues = formatIssues(groupedIssues);
-
-        if (opts && opts.threshold && issues.length < opts.threshold) {
-          cy.log(`${title}\n\n${formattedIssues}`);
-        } else {
-          throw new Error(`${title}\n\n${formattedIssues}`);
-        }
-      }
+      // Log a message if no issues were found
+      Cypress.log({
+        title: "cy.pa11y",
+        message: "Accessibility test passed",
+      });
     });
 };
 

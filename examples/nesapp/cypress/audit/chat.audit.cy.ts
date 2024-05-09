@@ -11,6 +11,6 @@ describe('Chat', () => {
   })
 
   it('should test lighthouse', () => {
-    cy.lighthouseWithDefaultSettings({ accessibility: 90 })
+    cy.lighthouseWithDefaultSettings({ accessibility: 100 })
   })
 })

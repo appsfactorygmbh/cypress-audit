@@ -20,6 +20,10 @@ Cypress.Commands.add(
     cy.pa11y({
       // Add more pa11y options here
       level: 'WCAG2AA',
+      // Hide the nuxt dev tools elements
+      hideElements: '#nuxt-devtools-container',
+      // allow one failing test
+      threshold: 1,
       // In case you want to overwrite the default options, you can do it via the overwriteOptions parameter
       ...overwriteOptions,
     })
