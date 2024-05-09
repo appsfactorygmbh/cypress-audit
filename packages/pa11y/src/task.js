@@ -8,7 +8,11 @@ const pa11y =
       browserURL: `http://localhost:${global.cypress_audit_port}`,
     });
 
-    const results = await pa11yLib(url, { browser, runners: ["axe"], ...opts });
+    const results = await pa11yLib(url, {
+      browser,
+      runners: ["axe"],
+      ...opts,
+    });
 
     if (callback) {
       callback(results);

@@ -24,6 +24,8 @@ Cypress.Commands.add(
       hideElements: '#nuxt-devtools-container',
       // allow one failing test
       threshold: 1,
+      // Add more pa11y runners here. Some results are redundant now, but you will also find more issues. Default is just axe.
+      runners: ['axe', 'htmlcs'],
       // In case you want to overwrite the default options, you can do it via the overwriteOptions parameter
       ...overwriteOptions,
     })
