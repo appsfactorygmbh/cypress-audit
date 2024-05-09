@@ -28,6 +28,9 @@ declare namespace Cypress {
     "dom-size"?: number;
   }
 
+  interface LighthouseFlags extends LH.Flags {}
+  interface LighthouseConfig extends LH.Config {}
+
   interface Chainable<Subject> {
     /**
      * Runs a lighthouse audit
@@ -36,8 +39,8 @@ declare namespace Cypress {
      */
     lighthouse(
       thresholds?: LighthouseThresholds,
-      flags?: LH.Flags,
-      config?: LH.Config
+      flags?: LighthouseFlags,
+      config?: LighthouseConfig
     ): Chainable<Subject>;
   }
 }

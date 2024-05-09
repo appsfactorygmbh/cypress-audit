@@ -5,10 +5,12 @@ describe('Chat', () => {
   })
 
   it('should test pa11y', () => {
-    cy.pa11yWithDefaultSettings()
+    cy.pa11yWithDefaultSettings({
+      actions: ['set field #text to Hallo'],
+    })
   })
 
   it('should test lighthouse', () => {
-    cy.lighthouseWithDefaultSettings()
+    cy.lighthouseWithDefaultSettings({ accessibility: 90 })
   })
 })

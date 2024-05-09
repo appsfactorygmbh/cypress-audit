@@ -8,7 +8,13 @@ declare namespace Cypress {
      * @example cy.dataCy('greeting')
      */
     login(username: string, password: string): Chainable<JQuery<HTMLElement>>
-    lighthouseWithDefaultSettings(): Chainable<JQuery<HTMLElement>>
-    pa11yWithDefaultSettings(): Chainable<JQuery<HTMLElement>>
+    lighthouseWithDefaultSettings(
+      overwriteTresholds?: Cypress.LighthouseThresholds,
+      overwriteFlags?: Cypress.LighthouseFlags,
+      overwriteConfig?: Cypress.LighthouseConfig,
+    ): Chainable<JQuery<HTMLElement>>
+    pa11yWithDefaultSettings(
+      overwriteOptions?: Pa11yOptions,
+    ): Chainable<JQuery<HTMLElement>>
   }
 }

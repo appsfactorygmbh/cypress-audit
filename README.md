@@ -29,8 +29,8 @@ We also decided to publish only one npm package, that includes lighthouse AND pa
 
 # Limitations
 
-- The output of lighthouse is not informative enough. Writing the HTML reports to the file system is possible, but you need to handle the files yourself.
-- The test runners are opening the browser in a new tab, which might lose session state.
+- The output of lighthouse is not informative enough. Writing the HTML reports to the file system is possible, but you need to handle the files yourself (see example code and (Writing Lighthouse HTML Reports to the file system)[#writing-lighthouse-html-reports-to-the-file-system])
+- The test runners are opening the browser in a new tab, which loses the website state. Cookies and LocalStorage are available, so you can use Cypress commands to set them up before starting the tests (e.g. login to set cookie/localStorage)
 
 # Installation
 
@@ -115,39 +115,59 @@ it("should pass pa11y test", () => {
 
 The options for the commands are typed. So you can use intellisense for configuration.
 
-For lighthouse you can for example do create a new Command and overwrite the default configuration in the `commands.ts`
+For lighthouse you can for example do create a new Command and overwrite the default configuration in the `commands.ts`. In this example we also allow to merge custom thresholds, flags and config:
 
 ```ts
-Cypress.Commands.add("lighthouseWithDefaultSettings", () => {
-  cy.lighthouse(
-    // Thresholds
-    {
-      accessibility: 80,
-      // Add more lighthouse options here for more tests
-    },
-    // Lighthouse "Flags"
-    {
-      formFactor: "desktop",
-      screenEmulation: {
-        width: 1350,
-        height: 940,
-        mobile: false,
+Cypress.Commands.add(
+  "lighthouseWithDefaultSettings",
+  (
+    overwriteTresholds: Cypress.LighthouseThresholds = {},
+    overwriteFlags: Cypress.LighthouseFlags = {},
+    overwriteConfig: Cypress.LighthouseConfig = {}
+  ) => {
+    cy.lighthouse(
+      // Thresholds
+      {
+        // Add more lighthouse options here for more tests
+        accessibility: 80,
+        // In case you want to overwrite the default thresholds, you can do it via the overwriteTreshholds parameter
+        ...overwriteTresholds,
       },
-      throttling: {
-        rttMs: 40,
-        throughputKbps: 11024,
-        cpuSlowdownMultiplier: 1,
-        requestLatencyMs: 0,
-        downloadThroughputKbps: 0,
-        uploadThroughputKbps: 0,
+      // Lighthouse "Flags"
+      {
+        // Add more lighthouse flags here for more tests
+        formFactor: "desktop",
+
+        screenEmulation: {
+          width: 1350,
+          height: 940,
+          mobile: false,
+        },
+        throttling: {
+          rttMs: 40,
+          throughputKbps: 11024,
+          cpuSlowdownMultiplier: 1,
+          requestLatencyMs: 0,
+          downloadThroughputKbps: 0,
+          uploadThroughputKbps: 0,
+        },
+        // In case you want to overwrite the default flags, you can do it via the overwriteFlags parameter
+        ...overwriteFlags,
       },
-    },
-    // Lighthouse "Config"
-    {
-      extends: "lighthouse:default",
-    }
-  );
-});
+      // Lighthouse "Config"
+      {
+        // Add more lighthouse config here for more tests
+        extends: "lighthouse:default",
+
+        settings: {
+          output: "html",
+        },
+        // In case you want to overwrite the default config, you can do it via the overwriteConfig parameter
+        ...overwriteConfig,
+      }
+    );
+  }
+);
 ```
 
 Don't forget to add the types fort his new command in your `support/index.d.ts`:
@@ -158,7 +178,11 @@ Don't forget to add the types fort his new command in your `support/index.d.ts`:
 // cypress/support/index.d.ts
 declare namespace Cypress {
   interface Chainable {
-    lighthouseWithDefaultSettings(): Chainable<JQuery<HTMLElement>>;
+    lighthouseWithDefaultSettings(
+      overwriteTresholds?: Cypress.LighthouseThresholds,
+      overwriteFlags?: Cypress.LighthouseFlags,
+      overwriteConfig?: Cypress.LighthouseConfig
+    ): Chainable<JQuery<HTMLElement>>;
   }
 }
 ```
@@ -167,7 +191,8 @@ Now you can use it in a testfile:
 
 ```ts
 it("should pass lighthouse test", () => {
-  cy.lighthouseWithDefaultSettings();
+  // Arguments are optional, because we defined default values.
+  cy.lighthouseWithDefaultSettings({ accessibility: 90 });
 });
 ```
 
@@ -175,15 +200,20 @@ it("should pass lighthouse test", () => {
 
 The options for the commands are typed. So you can use intellisense for configuration.
 
-For pa11y you can for example do create a new Command and overwrite the default configuration in the `commands.ts`
+For pa11y you can for example do create a new Command and overwrite the default configuration in the `commands.ts`. In this example we also allow to merge custom options:
 
 ```ts
-Cypress.Commands.add("pa11yWithDefaultSettings", () => {
-  cy.pa11y({
-    level: "WCAG2AA",
-    // Add more pa11y options here
-  });
-});
+Cypress.Commands.add(
+  "pa11yWithDefaultSettings",
+  (overwriteOptions: Cypress.Pa11yOptions = {}) => {
+    cy.pa11y({
+      // Add more pa11y options here
+      level: "WCAG2AA",
+      // In case you want to overwrite the default options, you can do it via the overwriteOptions parameter
+      ...overwriteOptions,
+    });
+  }
+);
 ```
 
 Don't forget to add the types fort his new command in your `support/index.d.ts`:
@@ -194,7 +224,9 @@ Don't forget to add the types fort his new command in your `support/index.d.ts`:
 // cypress/support/index.d.ts
 declare namespace Cypress {
   interface Chainable {
-    pa11yWithDefaultSettings(): Chainable<JQuery<HTMLElement>>;
+    pa11yWithDefaultSettings(
+      overwriteOptions?: Pa11yOptions
+    ): Chainable<JQuery<HTMLElement>>;
   }
 }
 ```
@@ -203,9 +235,27 @@ Now you can use it in a testfile:
 
 ```ts
 it("should pass pa11y test", () => {
-  cy.pa11yWithDefaultSettings();
+  cy.pa11yWithDefaultSettings({
+    // actions are performed before the audit, see section below
+    actions: ["set field #text to Hallo"],
+  });
 });
 ```
+
+# Writing pa11y actions to prepare the audit
+
+You can use the `actions` parameter to perform actions before the audit. This can be useful to set up the website state before the audit. You can use cy commands to login (to set cookies and local storage). But for the audit a new tab is opened, so you need to set up the website state, if you need to. For example open a modal or entering some text, etc:
+
+```ts
+it("should pass pa11y test", () => {
+  cy.pa11yWithDefaultSettings({
+    // actions are performed before the audit, see section below
+    actions: ["set field #text to Hallo"],
+  });
+});
+```
+
+For detailed information about the actions, please visit the [pa11y documentation](https://github.com/pa11y/pa11y?tab=readme-ov-file#actions)
 
 # Writing Lighthouse HTML Reports to the file system
 
