@@ -11,6 +11,7 @@ Run [Lighthouse](https://developers.google.com/web/tools/lighthouse) and [Pa11y]
    1. [Basic](#basic)
    1. [Advanced Lighthouse](#advanced-lighthouse)
    1. [Advanced Pa11y](#advanced-pa11y)
+1. [Writing pa11y actions to prepare the audit](#writing-pa11y-actions-to-prepare-the-audit)
 1. [Writing Lighthouse HTML Reports to the file system](#writing-lighthouse-html-reports-to-the-file-system)
 
 # Original Repository
