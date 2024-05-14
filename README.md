@@ -1,6 +1,10 @@
+# Cypress Audit (Lighthouse and Pa11y)
+
+[![npm version](https://badge.fury.io/js/@appsfactory%2Fcypress-audit.svg)](https://badge.fury.io/js/@appsfactory%2Fcypress-audit)
+
 Run [Lighthouse](https://developers.google.com/web/tools/lighthouse) and [Pa11y](https://github.com/pa11y/pa11y) audits directly in [Cypress](https://cypress.io/) test suites
 
-# Table of Content
+## Table of Content
 
 1. [Original Repository](#original-repository)
 1. [About this fork](#about-this-fork)
@@ -14,11 +18,11 @@ Run [Lighthouse](https://developers.google.com/web/tools/lighthouse) and [Pa11y]
 1. [Writing pa11y actions to prepare the audit](#writing-pa11y-actions-to-prepare-the-audit)
 1. [Writing Lighthouse HTML Reports to the file system](#writing-lighthouse-html-reports-to-the-file-system)
 
-# Original Repository
+## Original Repository
 
 This is a fork of https://github.com/stefanonardo/cypress-audit, which is also a fork of https://github.com/mfrachet/cypress-audit. But both were basically on the same level, when we forked.
 
-# About this fork
+## About this fork
 
 We were really happy to find @mfrachet's repository. There were just some minor things we wanted to update:
 
@@ -32,20 +36,20 @@ We were really happy to find @mfrachet's repository. There were just some minor 
 
 We also decided to publish only one npm package, that includes lighthouse AND pa11y. Therefore the usage is minimally different. The example has been changed as well.
 
-# Limitations
+## Limitations
 
 - The output of lighthouse is not informative enough. Writing the HTML reports to the file system is possible, but you need to handle the files yourself (see example code and (Writing Lighthouse HTML Reports to the file system)[#writing-lighthouse-html-reports-to-the-file-system])
 - The test runners are opening the browser in a new tab, which loses the website state. Cookies and LocalStorage are available, so you can use Cypress commands to set them up before starting the tests (e.g. login to set cookie/localStorage)
 
-# Installation
+## Installation
 
 `npm i -D @appsfactory/cypress-audit`
 
-# Limitations
+## Limitations
 
 Running `cypress run` doesn't work with all browsers. We specify `-b chrome` manually.
 
-# Example and Recommendation
+## Example and Recommendation
 
 Please also look the `/examples` folder for working code.
 
@@ -64,9 +68,9 @@ and you could create two different npm scripts for this:
 "cypress:audit": "cypress run -b chrome --spec 'cypress/audit/**/*.cy.ts'",
 ```
 
-# Configuration
+## Configuration
 
-## Basic
+### Basic
 
 Setup your Cypress Config to prepare the audit and pass the pa11y and/or lighthouse to the task execution:
 
@@ -116,7 +120,7 @@ it("should pass pa11y test", () => {
 });
 ```
 
-## Advanced Lighthouse
+### Advanced Lighthouse
 
 The options for the commands are typed. So you can use intellisense for configuration.
 
@@ -201,7 +205,7 @@ it("should pass lighthouse test", () => {
 });
 ```
 
-## Advanced Pa11y
+### Advanced Pa11y
 
 The options for the commands are typed. So you can use intellisense for configuration.
 
@@ -253,7 +257,7 @@ it("should pass pa11y test", () => {
 });
 ```
 
-# Writing pa11y actions to prepare the audit
+## Writing pa11y actions to prepare the audit
 
 You can use the `actions` parameter to perform actions before the audit. This can be useful to set up the website state before the audit. You can use cy commands to login (to set cookies and local storage). But for the audit a new tab is opened, so you need to set up the website state, if you need to. For example open a modal or entering some text, etc:
 
@@ -268,7 +272,7 @@ it("should pass pa11y test", () => {
 
 For detailed information about the actions, please visit the [pa11y documentation](https://github.com/pa11y/pa11y?tab=readme-ov-file#actions)
 
-# Writing Lighthouse HTML Reports to the file system
+## Writing Lighthouse HTML Reports to the file system
 
 In order to write lighthouse HTML reports to the file system, you need to change third parameter of the lighthouse command:
 
