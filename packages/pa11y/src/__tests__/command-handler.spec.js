@@ -1,5 +1,4 @@
-import pa11yCommandHandler from "../command-handler";
-
+const pa11yCommandHandler = require("../command-handler");
 describe("pa11y command", () => {
   beforeEach(() => {
     global.Cypress = {
@@ -8,11 +7,9 @@ describe("pa11y command", () => {
       },
     };
   });
-
   afterEach(() => {
     jest.resetAllMocks();
   });
-
   describe("verify browser compat", () => {
     ["Chrome", "Chromium", "Canary"].forEach((browser) => {
       it(`resolves with no errors when the browser is ${browser}`, async () => {
@@ -21,40 +18,37 @@ describe("pa11y command", () => {
             displayName: browser,
           },
         };
-
         global.cy = {
           url: () => Promise.resolve("my-url"),
           task: jest.fn(() => Promise.resolve([])),
           log: jest.fn(),
         };
-
-        await pa11yCommandHandler({ a: "bcd" });
+        await pa11yCommandHandler({
+          a: "bcd",
+        });
         expect(global.cy.log).not.toBeCalled();
       });
     });
-
     it(`shows an error when the browser is Edge`, async () => {
       global.Cypress = {
         browser: {
           displayName: "Edge",
         },
       };
-
       global.cy = {
         url: () => Promise.resolve("my-url"),
         task: jest.fn(() => Promise.resolve([])),
         log: jest.fn(),
       };
-
-      await pa11yCommandHandler({ a: "bcd" });
-
+      await pa11yCommandHandler({
+        a: "bcd",
+      });
       expect(global.cy.log).toBeCalledWith(
         "cy.pa11y()",
         "Edge is not supported. Skipping..."
       );
     });
   });
-
   describe("when issues", () => {
     it("shows an error when there is one error", async () => {
       global.Cypress = {
@@ -62,7 +56,6 @@ describe("pa11y command", () => {
           displayName: "Chrome",
         },
       };
-
       global.cy = {
         url: () => Promise.resolve("my-url"),
         task: jest.fn(() =>
@@ -77,9 +70,10 @@ describe("pa11y command", () => {
         ),
         log: jest.fn(),
       };
-
       try {
-        await pa11yCommandHandler({ a: "bcd" });
+        await pa11yCommandHandler({
+          a: "bcd",
+        });
       } catch (e) {
         expect(e.message).toMatchInlineSnapshot(`
           "cy.pa11y - 1 accessibility violation was found
@@ -92,14 +86,12 @@ describe("pa11y command", () => {
         `);
       }
     });
-
     it("shows multiple errors when there are multiple errors", async () => {
       global.Cypress = {
         browser: {
           displayName: "Chrome",
         },
       };
-
       global.cy = {
         url: () => Promise.resolve("my-url"),
         task: jest.fn(() =>
@@ -126,9 +118,10 @@ describe("pa11y command", () => {
         ),
         log: jest.fn(),
       };
-
       try {
-        await pa11yCommandHandler({ a: "bcd" });
+        await pa11yCommandHandler({
+          a: "bcd",
+        });
       } catch (e) {
         expect(e.message).toMatchInlineSnapshot(`
           "cy.pa11y - 3 accessibility violations were found
@@ -147,14 +140,12 @@ describe("pa11y command", () => {
         `);
       }
     });
-
     it("shows multiple errors when there are multiple errors without selector", async () => {
       global.Cypress = {
         browser: {
           displayName: "Chrome",
         },
       };
-
       global.cy = {
         url: () => Promise.resolve("my-url"),
         task: jest.fn(() =>
@@ -178,9 +169,10 @@ describe("pa11y command", () => {
         ),
         log: jest.fn(),
       };
-
       try {
-        await pa11yCommandHandler({ a: "bcd" });
+        await pa11yCommandHandler({
+          a: "bcd",
+        });
       } catch (e) {
         expect(e.message).toMatchInlineSnapshot(`
           "cy.pa11y - 3 accessibility violations were found
@@ -199,14 +191,12 @@ describe("pa11y command", () => {
         `);
       }
     });
-
     it("uses cy.log when threshold is above number of errors", async () => {
       global.Cypress = {
         browser: {
           displayName: "Chrome",
         },
       };
-
       global.cy = {
         url: () => Promise.resolve("my-url"),
         task: jest.fn(() =>
@@ -220,9 +210,10 @@ describe("pa11y command", () => {
         ),
         log: jest.fn(),
       };
-
       let consoleSpy = jest.spyOn(cy, "log").mockImplementation();
-      await pa11yCommandHandler({ threshold: 2 });
+      await pa11yCommandHandler({
+        threshold: 2,
+      });
       expect(consoleSpy).toHaveBeenCalledTimes(1);
       // TODO: Fix expected message string
       // expect(consoleSpy).toHaveBeenCalledWith('cy.pa11y - 1 accessibility violation was found\n\nIssue: first, # of occurrences: 1.\n  - Something wrong occured\n  - Context: Additional context found          \n\n');

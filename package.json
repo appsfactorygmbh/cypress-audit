@@ -1,7 +1,7 @@
 {
   "name": "@appsfactory/cypress-audit",
-  "version": "2.0.6",
-  "type": "module",
+  "version": "3.0.0",
+  "type": "commonjs",
   "main": "index.js",
   "types": "index.d.ts",
   "author": "Oliver Weiß <oliver.weiss@appsfactory.de> (https://github.com/appsfactorygmbh)",

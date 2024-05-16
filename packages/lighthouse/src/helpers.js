@@ -10,7 +10,9 @@ const computeCategories = (categories) => {
   return Object.keys(categories).reduce(
     (metrics, curr) => ({
       ...metrics,
-      [curr]: { score: categories[curr].score * 100 },
+      [curr]: {
+        score: categories[curr].score * 100,
+      },
     }),
     {}
   );
@@ -27,16 +29,16 @@ const computeAudits = (audits) => {
   return Object.keys(audits).reduce(
     (metrics, curr) => ({
       ...metrics,
-      [curr]: { numericValue: audits[curr].numericValue },
+      [curr]: {
+        numericValue: audits[curr].numericValue,
+      },
     }),
     {}
   );
 };
-
 const compareWithThresholds = (metrics, thresholds) => {
   const errors = [];
   const results = [];
-
   Object.keys(thresholds).forEach((key) => {
     const actualTreshold = thresholds[key];
     const actualMetric = metrics[key];
@@ -67,8 +69,11 @@ const compareWithThresholds = (metrics, thresholds) => {
       }
     }
   });
-
-  return { errors, results };
+  return {
+    errors,
+    results,
+  };
 };
-
-export { computeCategories, computeAudits, compareWithThresholds };
+exports.computeCategories = computeCategories;
+exports.computeAudits = computeAudits;
+exports.compareWithThresholds = compareWithThresholds;

@@ -3,7 +3,6 @@ const VALID_BROWSERS = {
   Chromium: true,
   Canary: true,
 };
-
 const formatIssue = (issue) => {
   return `
     Code: ${issue.code} |||
@@ -11,7 +10,6 @@ const formatIssue = (issue) => {
     Context: ${issue.context}
     `;
 };
-
 const printIssues = (issues) => {
   issues.forEach((issue) => {
     Cypress.log({
@@ -22,7 +20,6 @@ const printIssues = (issues) => {
     });
   });
 };
-
 const pa11yCommandHandler = (opts) => {
   if (!VALID_BROWSERS[Cypress.browser.displayName]) {
     return cy.log(
@@ -30,17 +27,20 @@ const pa11yCommandHandler = (opts) => {
       `${Cypress.browser.displayName} is not supported. Skipping...`
     );
   }
-
   return cy
     .url()
-    .then((url) => cy.task("pa11y", { url, opts }))
+    .then((url) =>
+      cy.task("pa11y", {
+        url,
+        opts,
+      })
+    )
     .then((issues) => {
       printIssues(issues);
       return cy.wrap(issues);
     })
     .then((issues) => {
-      const threshold = opts.threshold ?? 0;
-
+      const threshold = opts?.threshold ?? 0;
       assert.isBelow(
         issues.length,
         threshold,
@@ -54,5 +54,4 @@ const pa11yCommandHandler = (opts) => {
       });
     });
 };
-
-export { pa11yCommandHandler };
+exports.pa11yCommandHandler = pa11yCommandHandler;

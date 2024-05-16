@@ -1,21 +1,25 @@
-import {
+const {
   computeCategories,
   computeAudits,
   compareWithThresholds,
-} from "../helpers";
-
+} = require("../helpers");
 describe("performance helpers", () => {
   describe("computeCategories", () => {
     it("transforms a lighthouse object in a cypress-audit object", () => {
       const actual = computeCategories({
-        performance: { score: 0.5, other: "invalid attr" },
+        performance: {
+          score: 0.5,
+          other: "invalid attr",
+        },
       });
-      const expected = { performance: { score: 50 } };
-
+      const expected = {
+        performance: {
+          score: 50,
+        },
+      };
       expect(actual).toEqual(expected);
     });
   });
-
   describe("computeAudits", () => {
     it("transforms a lighthouse object in a cypress-audit object", () => {
       const actual = computeAudits({
@@ -24,23 +28,29 @@ describe("performance helpers", () => {
           other: "invalid attr",
         },
       });
-      const expected = { performance: { numericValue: 12 } };
-
+      const expected = {
+        performance: {
+          numericValue: 12,
+        },
+      };
       expect(actual).toEqual(expected);
     });
   });
-
   describe("compareWithThresholds", () => {
     it("handles errors", () => {
       const metrics = {
-        performance: { score: 50 },
-        accessibility: { numericValue: 12 },
+        performance: {
+          score: 50,
+        },
+        accessibility: {
+          numericValue: 12,
+        },
       };
-
-      const thresholds = { performance: 60, accessibility: 11 };
-
+      const thresholds = {
+        performance: 60,
+        accessibility: 11,
+      };
       const actual = compareWithThresholds(metrics, thresholds);
-
       expect(actual).toEqual({
         errors: [
           "performance record is 50 and is under the 60 threshold",
@@ -49,17 +59,20 @@ describe("performance helpers", () => {
         results: [],
       });
     });
-
     it("handles success", () => {
       const metrics = {
-        performance: { score: 50 },
-        accessibility: { numericValue: 12 },
+        performance: {
+          score: 50,
+        },
+        accessibility: {
+          numericValue: 12,
+        },
       };
-
-      const thresholds = { performance: 40, accessibility: 13 };
-
+      const thresholds = {
+        performance: 40,
+        accessibility: 13,
+      };
       const actual = compareWithThresholds(metrics, thresholds);
-
       expect(actual).toEqual({
         errors: [],
         results: [

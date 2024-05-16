@@ -1,5 +1,4 @@
-import lighthouseCommandHandler from "../command-handler";
-
+const lighthouseCommandHandler = require("../command-handler");
 describe("lighthouse command", () => {
   beforeEach(() => {
     global.Cypress = {
@@ -9,11 +8,9 @@ describe("lighthouse command", () => {
       config: () => undefined,
     };
   });
-
   afterEach(() => {
     jest.resetAllMocks();
   });
-
   describe("verify browser compat", () => {
     ["Chrome", "Chromium", "Canary"].forEach((browser) => {
       it(`resolves with no errors when the browser is ${browser}`, async () => {
@@ -23,59 +20,68 @@ describe("lighthouse command", () => {
             displayName: browser,
           },
         };
-
         global.cy = {
           url: () => Promise.resolve("my-url"),
-          task: jest.fn(() => Promise.resolve({ errors: [], results: [] })),
+          task: jest.fn(() =>
+            Promise.resolve({
+              errors: [],
+              results: [],
+            })
+          ),
           log: jest.fn(),
           wrap: jest.fn((x) => x),
         };
-
-        await lighthouseCommandHandler({ performance: 10 });
+        await lighthouseCommandHandler({
+          performance: 10,
+        });
       });
     });
-
     it(`shows an error when the browser is Edge`, async () => {
       global.Cypress = {
         browser: {
           displayName: "Edge",
         },
       };
-
       global.cy = {
         url: () => Promise.resolve("my-url"),
-        task: jest.fn(() => Promise.resolve({ errors: [], results: [] })),
+        task: jest.fn(() =>
+          Promise.resolve({
+            errors: [],
+            results: [],
+          })
+        ),
         log: jest.fn(),
         wrap: jest.fn((x) => x),
       };
-
-      await lighthouseCommandHandler({ performance: 10 });
-
+      await lighthouseCommandHandler({
+        performance: 10,
+      });
       expect(global.cy.log).toBeCalledWith(
         "cy.lighthouse()",
         "Edge is not supported. Skipping..."
       );
     });
   });
-
   describe("no thresholds found", () => {
     it("showns an information when thresholds are not set", async () => {
       global.cy = {
         url: () => Promise.resolve("my-url"),
-        task: jest.fn(() => Promise.resolve({ errors: [], results: [] })),
+        task: jest.fn(() =>
+          Promise.resolve({
+            errors: [],
+            results: [],
+          })
+        ),
         log: jest.fn(),
         wrap: jest.fn((x) => x),
       };
-
       await lighthouseCommandHandler();
-
       expect(global.cy.log).toBeCalledWith(
         "cypress-audit",
         "It looks like you have not set thresholds yet. The test will be based on the 100 score for every metrics. Refer to https://github.com/mfrachet/cypress-audit to have more information and set thresholds by yourself :)."
       );
     });
   });
-
   describe("happy path", () => {
     it("shows each lighthouse score when it finishes", async () => {
       global.cy = {
@@ -89,16 +95,16 @@ describe("lighthouse command", () => {
         log: jest.fn(),
         wrap: jest.fn((x) => x),
       };
-
-      await lighthouseCommandHandler({ performance: 100, accessibility: 90 });
-
+      await lighthouseCommandHandler({
+        performance: 100,
+        accessibility: 90,
+      });
       expect(global.cy.log).toBeCalledWith("-------- cy.lighthouse --------");
       expect(global.cy.log).toBeCalledWith("First result");
       expect(global.cy.log).toBeCalledWith("Second result");
       expect(global.cy.log).toBeCalledWith("-----------------------------");
     });
   });
-
   describe("error path", () => {
     it("shows one error when one threshold is crossed", async () => {
       global.cy = {
@@ -112,9 +118,11 @@ describe("lighthouse command", () => {
         log: jest.fn(),
         wrap: jest.fn((x) => x),
       };
-
       try {
-        await lighthouseCommandHandler({ performance: 100, accessibility: 90 });
+        await lighthouseCommandHandler({
+          performance: 100,
+          accessibility: 90,
+        });
       } catch (e) {
         expect(global.cy.log).toBeCalledWith("-------- cy.lighthouse --------");
         expect(e.message).toMatchInlineSnapshot(`
@@ -124,7 +132,6 @@ describe("lighthouse command", () => {
         `);
       }
     });
-
     it("shows multiple error when multiple thresholds are crossed", async () => {
       global.cy = {
         url: () => Promise.resolve("my-url"),
@@ -137,9 +144,11 @@ describe("lighthouse command", () => {
         log: jest.fn(),
         wrap: jest.fn((x) => x),
       };
-
       try {
-        await lighthouseCommandHandler({ performance: 100, accessibility: 90 });
+        await lighthouseCommandHandler({
+          performance: 100,
+          accessibility: 90,
+        });
       } catch (e) {
         expect(global.cy.log).toBeCalledWith("-------- cy.lighthouse --------");
         expect(e.message).toMatchInlineSnapshot(`
@@ -150,7 +159,6 @@ describe("lighthouse command", () => {
         `);
       }
     });
-
     it("shows one error when lighthouse does not provide anything", async () => {
       global.cy = {
         url: () => Promise.resolve("my-url"),
@@ -158,9 +166,11 @@ describe("lighthouse command", () => {
         log: jest.fn(),
         wrap: jest.fn((x) => x),
       };
-
       try {
-        await lighthouseCommandHandler({ performance: 100, accessibility: 90 });
+        await lighthouseCommandHandler({
+          performance: 100,
+          accessibility: 90,
+        });
       } catch (e) {
         expect(global.cy.log).toBeCalledWith("-------- cy.lighthouse --------");
         expect(e.message).toMatchInlineSnapshot(

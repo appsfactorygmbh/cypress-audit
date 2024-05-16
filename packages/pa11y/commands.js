@@ -1,3 +1,2 @@
-import { pa11yCommandHandler } from "./src/command-handler";
-
+const { pa11yCommandHandler } = require("./src/command-handler");
 Cypress.Commands.add("pa11y", pa11yCommandHandler);

@@ -28,7 +28,6 @@ We were really happy to find @mfrachet's repository. There were just some minor 
 
 1. Fix some broken TypeScript definitions
 1. Keep pa11y and lighthouse up to date
-1. Converted from CommonJS to ESM
 1. Created one npm package for both pa11y and lighthouse
 1. Updated the example code
 1. Extend the README with more examples and explanations
