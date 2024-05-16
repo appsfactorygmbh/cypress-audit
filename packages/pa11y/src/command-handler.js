@@ -8,7 +8,7 @@ const printIssues = (issues) => {
   issues.forEach((issue) => {
     Cypress.log({
       title: issue.code,
-      message: issue.message,
+      message: `${issue.runner}: ${issue.message}`,
       consoleProps: () => issue,
       $el: Cypress.$(issue.selector),
     });
@@ -35,7 +35,7 @@ const pa11yCommandHandler = (opts) => {
     })
     .then((issues) => {
       const threshold = opts?.threshold ?? 0;
-      assert.isBelow(
+      assert.isAtMost(
         issues.length,
         threshold,
         `cy.pa11y - ${issues.length} accessibility violation(s) found. Threshold: ${threshold}. Issues: ${issues.length}`
