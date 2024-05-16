@@ -190,7 +190,7 @@ declare namespace Cypress {
       overwriteTresholds?: Cypress.LighthouseThresholds,
       overwriteFlags?: Cypress.LighthouseFlags,
       overwriteConfig?: Cypress.LighthouseConfig
-    ): Chainable<JQuery<HTMLElement>>;
+    ): void;
   }
 }
 ```
@@ -238,9 +238,7 @@ Don't forget to add the types fort his new command in your `support/index.d.ts`:
 // cypress/support/index.d.ts
 declare namespace Cypress {
   interface Chainable {
-    pa11yWithDefaultSettings(
-      overwriteOptions?: Pa11yOptions
-    ): Chainable<JQuery<HTMLElement>>;
+    pa11yWithDefaultSettings(overwriteOptions?: Pa11yOptions): void;
   }
 }
 ```
