@@ -3,18 +3,12 @@ const VALID_BROWSERS = {
   Chromium: true,
   Canary: true,
 };
-const formatIssue = (issue) => {
-  return `
-    Code: ${issue.code} |||
-    Issue: ${issue.message} |||
-    Context: ${issue.context}
-    `;
-};
+
 const printIssues = (issues) => {
   issues.forEach((issue) => {
     Cypress.log({
       title: issue.code,
-      message: formatIssue(issue),
+      message: issue.message,
       consoleProps: () => issue,
       $el: Cypress.$(issue.selector),
     });
