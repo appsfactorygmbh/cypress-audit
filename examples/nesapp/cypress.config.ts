@@ -14,7 +14,7 @@ export default defineConfig({
       })
 
       on('task', {
-        pa11y: pa11y(),
+        pa11y: pa11y((result) => console.log(result)),
         lighthouse: lighthouse((result) => {
           const htmlReport = result.report
 

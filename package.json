@@ -17,6 +17,7 @@
     "cypress": ">=10"
   },
   "devDependencies": {
+    "@types/pa11y": "^5.3.7",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",

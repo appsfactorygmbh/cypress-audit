@@ -34,7 +34,7 @@ const pa11yCommandHandler = (opts) => {
       return cy.wrap(issues);
     })
     .then((issues) => {
-      const threshold = opts?.threshold ?? 0;
+      const threshold = opts && opts.threshold ? opts.threshold : 0;
       assert.isAtMost(
         issues.length,
         threshold,

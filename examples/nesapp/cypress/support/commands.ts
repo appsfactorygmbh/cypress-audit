@@ -26,6 +26,11 @@ Cypress.Commands.add(
       threshold: 1,
       // Add more pa11y runners here. Some results are redundant now, but you will also find more issues. Default is just axe.
       runners: ['axe', 'htmlcs'],
+      // Set the viewport to the config values of Cypress
+      viewport: {
+        width: Cypress.config('viewportWidth'),
+        height: Cypress.config('viewportHeight'),
+      },
       // In case you want to overwrite the default options, you can do it via the overwriteOptions parameter
       ...overwriteOptions,
     })
